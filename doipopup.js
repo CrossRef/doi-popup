@@ -24,8 +24,14 @@
     };
 
     var defaultLicenseLabels = {
-	'http://creativecommons.org/licenses/by/3.0/': 'CC-BY 3.0',
-	'http://creativecommons.org/licenses/by/4.0/': 'CC-BY 4.0'
+	'http://creativecommons.org/licenses/by/3.0' :
+	'<img src="../img/cc-by.svg">',
+	'http://creativecommons.org/licenses/by/3.0/':
+	'<img src="../img/cc-by.svg">',
+	'http://creativecommons.org/licenses/by/4.0':
+	'<img src="../img/cc-by.svg">',
+	'http://creativecommons.org/licenses/by/4.0/':
+	'<img src="../img/cc-by.svg">'
     };
 
     var defaultContentGenerator = function(metadata, options) {
@@ -36,9 +42,20 @@
 	$.each(metadata['authors'], function(i) {
 	    var a = metadata['authors'][i];
 	    if (a['ORCID']) {
+		var label;
+
+		if (a['given'] && a['family']) {
+		    label = a['given'] + ' ' + a['family'];
+		} else if (a['family']) {
+		    label = a['family'];
+		} else {
+		    label = a['ORCID'];
+		}
+		
 		var $a = $('<a>')
 		    .attr('href', 'http://orcid.org/' + a['ORCID'])
-		    .text(a['ORCID']);
+		    .append($('<img>').attr('src', '../img/orcid_24x24.gif'))
+		    .append($('<span>').text(' ' + label));
 		$authorList.append($('<li>').append($a));
 	    }
 	});
@@ -59,7 +76,7 @@
 	    if (l['URL']) {
 		var $a = $('<a>')
 		    .attr('href', l['URL'])
-		    .text(options.licenseLabels[l['URL']]
+		    .html(options.licenseLabels[l['URL']]
 			  || l['URL']);
 		$licenseList.append($('<li>').append($a));
 	    }
@@ -78,9 +95,13 @@
 	    .append($licenseList);
 
 	var $c = $('<div>')
-	    .append($resources)
-	    .append($licenses)
-	    .append($authors);
+	    .append($('<p style="font-size:1.2em;">').text(metadata['title']))
+	    .append($('<h6>').text('Resources'))
+	    .append($('<p>').append($resourceList))
+	    .append($('<h6>').text('Licenses'))
+	    .append($('<p>').append($licenseList))
+	    .append($('<h6>').text('Authors'))
+	    .append($('<p>').append($authorList));
 
 	return $c.html();
     };
