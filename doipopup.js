@@ -96,6 +96,7 @@
 
 	var $c = $('<div>')
 	    .append($('<p style="font-size:1.2em;">').text(metadata['title']))
+	    .append($('<hr>'))
 	    .append($('<h6>').text('Resources'))
 	    .append($('<p>').append($resourceList))
 	    .append($('<h6>').text('Licenses'))
