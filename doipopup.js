@@ -2,9 +2,89 @@
     'use strict';
 
     var citeprocJsonMetadataParser = function(data) {
-	return data;
+	// For now we are pulling links out of CrossRef citeproc
+	// rather than the Link header. This will change when
+	// CORS headers are fixed on data proxies.
+
+	return {
+	    title: data['title'],
+	    licenses: data['license'],
+	    authors: data['author'],
+	    resources: data['link']
+	};
     };
-    
+
+    var defaultContentTypeLabels = {
+	'application/pdf': 'PDF',
+	'text/html': 'HTML',
+	'text/plain': 'Plain',
+	'application/xml': 'XML',
+	'text/xml': 'XML',
+	'text/csv': 'CSV'
+    };
+
+    var defaultLicenseLabels = {
+	'http://creativecommons.org/licenses/by/3.0/': 'CC-BY 3.0',
+	'http://creativecommons.org/licenses/by/4.0/': 'CC-BY 4.0'
+    };
+
+    var defaultContentGenerator = function(metadata, options) {
+	var $authorList = $('<ul class="list-inline">');
+	var $resourceList = $('<ul class="list-inline">');
+	var $licenseList = $('<ul class="list-inline">');
+
+	$.each(metadata['authors'], function(i) {
+	    var a = metadata['authors'][i];
+	    if (a['ORCID']) {
+		var $a = $('<a>')
+		    .attr('href', 'http://orcid.org/' + a['ORCID'])
+		    .text(a['ORCID']);
+		$authorList.append($('<li>').append($a));
+	    }
+	});
+
+	$.each(metadata['resources'], function(i) {
+	    var r = metadata['resources'][i];
+	    if (r['URL']) {
+		var $a = $('<a>')
+		    .attr('href', r['URL'])
+		    .text(options.contentTypeLabels[r['content-type']]
+			  || r['content-type']);
+		$resourceList.append($('<li>').append($a));
+	    }
+	});
+
+	$.each(metadata['licenses'], function(i) {
+	    var l = metadata['licenses'][i];
+	    if (l['URL']) {
+		var $a = $('<a>')
+		    .attr('href', l['URL'])
+		    .text(options.licenseLabels[l['URL']]
+			  || l['URL']);
+		$licenseList.append($('<li>').append($a));
+	    }
+	});
+
+	var $authors = $('<div>')
+	    .append($('<span>').text('Authors'))
+	    .append($authorList);
+
+	var $resources = $('<div>')
+	    .append($('<span>').text('Resources'))
+	    .append($resourceList);
+
+	var $licenses = $('<div>')
+	    .append($('<span>').text('Licenses'))
+	    .append($licenseList);
+
+	var $c = $('<div>')
+	    .append($resources)
+	    .append($licenses)
+	    .append($authors);
+
+	return $c.html();
+    };
+
     var DoiPopup = function (element, options) {
 	this.init('doiPopup', element, options);
 
@@ -15,10 +95,14 @@
 	    url: 'http://dx.doi.org/' + doi,
 	    headers: {'Accept': o.metadataContentType}
 	}).success(function(data, status, xhr) {
+	    // Needs Access-Control-Expose-Headers: Link
+	    // https://github.com/thlorenz/parse-link-header
+	    // We should merge link header links into metadata
 	    var linkHeader = xhr.getResponseHeader('Link');
 	    var metadata = o.metadataParser(data);
-	    
-	    o.content = metadata['title'] + linkHeader;
+
+	    o.content = defaultContentGenerator(metadata, o);
+	    // TODO: invoke render
 	});
     };
 
@@ -28,21 +112,24 @@
 
     DoiPopup.DEFAULTS = $.extend({}, $.fn.tooltip.Constructor.DEFAULTS, {
 	doi: '',
-	placement: 'right',
+	html: true,
+	content: 'spinner',
+	placement: 'bottom',
 	trigger: 'click',
 	metadataContentType: 'application/vnd.citationstyles.csl+json',
 	metadataParser: citeprocJsonMetadataParser,
-	content: '',
+	licenseLabels: defaultLicenseLabels,
+	contentTypeLabels: defaultContentTypeLabels,
 	template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
     });
 
     DoiPopup.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype);
     
-    DoiPopup.prototype.constructor = DoiPopup
+    DoiPopup.prototype.constructor = DoiPopup;
 
     DoiPopup.prototype.getDefaults = function () {
-	return DoiPopup.DEFAULTS
-    }
+	return DoiPopup.DEFAULTS;
+    };
 
     DoiPopup.prototype.setContent = function () {
 	var $tip    = this.tip();
@@ -55,12 +142,14 @@
 	    this.options.html ? (typeof content == 'string' ? 'html' : 'append') : 'text'
 	](content)
 
-	$tip.removeClass('fade top bottom left right in')
+	$tip.removeClass('fade top bottom left right in');
 
 	// IE8 doesn't accept hiding via the `:empty` pseudo selector, we have to do
 	// this manually by checking the contents.
-	if (!$tip.find('.popover-title').html()) $tip.find('.popover-title').hide()
-    }
+	if (!$tip.find('.popover-title').html()) {
+	    $tip.find('.popover-title').hide();
+	}
+    };
 
     DoiPopup.prototype.hasContent = function () {
 	return this.getDoi();
@@ -72,7 +161,7 @@
 
 	return $e.attr('data-content')
 	    || (typeof o.content == 'function' ?
-		o.content.call($e[0]) :
+		o.content.call(o.metadata) :
 		o.content);
     };
 
@@ -81,7 +170,7 @@
 	var o = this.options;
 
 	doi = o.doi
-	    || $("meta[name='dc.identifier']").text();
+	    || $("meta[name='dc.identifier']").attr('content');
 
 	return doi;
     };

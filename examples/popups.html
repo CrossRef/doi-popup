@@ -1,0 +1,59 @@
+<html>
+  <head>
+    <meta name="dc.identifier" content="10.1155/2013/938169">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="../tooltip.js"></script>
+    <script src="../doipopup.js"></script>
+    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+	
+	<h1>DOI Popup Examples</h1>
+
+	<h2>Explicit DOI</h2>
+	<p>
+	  <a href="http://dx.doi.org/10.1155/2013/938169">10.1155/2013/938169</a>
+	  <a class="btn btn-info" id="doi-link-explicit">Metadata</a>
+	</p>
+
+	<h2>dc.identifier Metadata</h2>
+	<p>
+	  <a href="http://dx.doi.org/10.1155/2013/938169">10.1155/2013/938169</a>
+	  <a class="btn btn-info" id="doi-link-meta">Metadata</a>
+	</p>
+
+	<h2>Other DOIs</h2>
+
+	<h3>eLife</h3>
+	<p>
+	  <a href="http://dx.doi.org/10.7554/eLife.01977">10.7554/eLife.01977</a>
+	  <a class="btn btn-info" id="doi-elife">Metadata</a>
+	</p>
+
+	<h3>Elsevier</h3>
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    <a href="http://dx.doi.org/10.1016/j.jnucmat.2014.12.036">
+	      10.1016/j.jnucmat.2014.12.036
+	    </a>
+	    <a class="btn btn-info" id="doi-elsevier">Metadata</a>
+	  </div>
+	</div>
+
+      </div>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+      $('#doi-link-explicit').doiPopup({doi: '10.1155/2013/938169'});
+      $('#doi-link-meta').doiPopup();
+      $('#doi-elife').doiPopup({doi: '10.7554/eLife.01977'});
+      $('#doi-elsevier').doiPopup({doi: '10.1016/j.jnucmat.2014.12.036'});
+      });
+    </script>
+    
+  </body>
+</html>
