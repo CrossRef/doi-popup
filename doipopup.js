@@ -53,7 +53,7 @@
 		}
 		
 		var $a = $('<a>')
-		    .attr('href', 'http://orcid.org/' + a['ORCID'])
+		    .attr('href', a['ORCID'])
 		    .append($('<img>').attr('src', '../img/orcid_24x24.gif'))
 		    .append($('<span>').text(' ' + label));
 		$authorList.append($('<li>').append($a));
