@@ -34,7 +34,7 @@
 	'<img src="../img/cc-by.svg">'
     };
 
-    var defaultContentGenerator = function(metadata, options) {
+    var defaultContentGenerator = function(doi, metadata, options) {
 	var $authorList = $('<ul class="list-inline">');
 	var $resourceList = $('<ul class="list-inline">');
 	var $licenseList = $('<ul class="list-inline">');
@@ -94,15 +94,33 @@
 	    .append($('<span>').text('Licenses'))
 	    .append($licenseList);
 
-	var $c = $('<div>')
-	    .append($('<p style="font-size:1.2em;">').text(metadata['title']))
-	    .append($('<hr>'))
-	    .append($('<h6>').text('Resources'))
-	    .append($('<p>').append($resourceList))
-	    .append($('<h6>').text('Licenses'))
-	    .append($('<p>').append($licenseList))
-	    .append($('<h6>').text('Authors'))
-	    .append($('<p>').append($authorList));
+	var $c = $('<div>');
+
+	$c.append($('<p style="font-size:1.2em;">').text(metadata['title']));
+	$c.append($('<p>')
+		  .append($('<img>')
+			  .attr('src', '../img/crossref.png')
+			  .attr('style', 'height:10px; margin-right: 8px;'))
+		  .append($('<a>').attr('href', 'http://dx.doi.org/' + doi).text(doi)));
+	$c.append($('<hr>'));
+
+	if (metadata['resources'].length != 0) {
+	    $c.append($('<div class="row">')
+		      .append($('<div class="col-md-2">').append($('<b>').text('Resources')))
+		      .append($('<div class="col-md-10">').append($resourceList)));
+	}
+
+	if (metadata['licenses'].length != 0) {
+	    $c.append($('<div class="row">')
+		      .append($('<div class="col-md-2">').append($('<b>').text('Licenses')))
+		      .append($('<div class="col-md-10">').append($licenseList)));
+	}
+
+	if (metadata['authors'].length != 0) {
+	    $c.append($('<div class="row">')
+		      .append($('<div class="col-md-2">').append($('<b>').text('Authors')))
+		      .append($('<div class="col-md-10">').append($authorList)));
+	}
 
 	return $c.html();
     };
@@ -123,7 +141,7 @@
 	    var linkHeader = xhr.getResponseHeader('Link');
 	    var metadata = o.metadataParser(data);
 
-	    o.content = defaultContentGenerator(metadata, o);
+	    o.content = defaultContentGenerator(doi, metadata, o);
 	    // TODO: invoke render
 	});
     };
