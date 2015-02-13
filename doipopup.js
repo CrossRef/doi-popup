@@ -97,21 +97,17 @@
 	var $c = $('<div>');
 
 	$c.append($('<p style="font-size:1.2em;">').text(metadata['title']));
-	$c.append($('<p>')
+	$c.append($resourceList.addClass('pull-right'));
+	$c.append($('<a>')
+		  .attr('href', 'http://dx.doi.org/' + doi)
 		  .append($('<img>')
 			  .attr('src', '../img/crossref.png')
 			  .attr('style', 'height:10px; margin-right: 8px;'))
-		  .append($('<a>').attr('href', 'http://dx.doi.org/' + doi).text(doi)));
+		  .append($('<span>').text(doi)));
 	$c.append($('<hr>'));
 
-	if (metadata['resources'].length != 0) {
-	    $c.append($('<div class="row">')
-		      .append($('<div class="col-md-2">').append($('<b>').text('Resources')))
-		      .append($('<div class="col-md-10">').append($resourceList)));
-	}
-
 	if (metadata['licenses'].length != 0) {
-	    $c.append($('<div class="row">')
+	    $c.append($('<div class="row" style="margin-bottom: 10px">')
 		      .append($('<div class="col-md-2">').append($('<b>').text('Licenses')))
 		      .append($('<div class="col-md-10">').append($licenseList)));
 	}
