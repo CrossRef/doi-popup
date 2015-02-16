@@ -44,12 +44,14 @@
       </div>
 
       <div class="row">
-	<h2>Using the plugin</h2>
+        <h3>Try it with your own DOIs</h3>
 
-	<h2>Try it with your own DOIs</h2>
+	<p>Generate a DOI popup for your own DOIs. Try it out with the form below:</p>
 
-	<input id="doi-try-doi" type="text" placeholder="10.5555/12345678"></input>
-	<a id="doi-try" type"submit" class="btn btn-primary">Create Popup</a>
+	<form class="form-inline">
+	  <input style="width: 30em;" class="form-control" id="doi-try-doi" type="text" placeholder="10.5555/12345678"></input>
+	  <a id="doi-try" class="form-control btn btn-success">Create Popup</a>
+	</form>
 
 	<div class="well"><center id="doi-try-gen"></center></div>
 
@@ -65,49 +67,97 @@
 	  });
 	</script>
 
-	<h2>Examples</h2>
+	<h3>Using the plugin</h3>
 
-	<h2>Explicit DOI</h2>
 	<p>
-	  <a href="http://dx.doi.org/10.1155/2013/938169">10.1155/2013/938169</a>
-	  <a class="btn btn-info" id="doi-link-explicit">Metadata</a>
+	  The DOI popup is a jQuery plugin compatible with Bootstrap. In fact, the plugin extends Bootstrap's
+	  <code>tooltip.js</code>, so if you don't currently include Bootstrap in your site, you will need to include <code>tooltip.js</code>
+	  and some CSS. If you want to style the popup yourself, you can exclude the premade CSS.
 	</p>
 
-	<h2>dc.identifier Metadata</h2>
-	<p>
-	  <a href="http://dx.doi.org/10.1155/2013/938169">10.1155/2013/938169</a>
-	  <a class="btn btn-info" id="doi-link-meta">Metadata</a>
-	</p>
+	<p>Required bits:</p>
 
-	<h2>Other DOIs</h2>
+	<ol>
+	  <li>jQuery. If you don't already, include jQuery on your page.</li>
+	  <li><code>tooltip.js</code>. Include this if you don't have the Bootstrap javascript.</li>
+	  <li><code>doipopup.js</code>. Javascript for the popup plugin itself.</li>
+	  <li>CSS. You'll need bootstrap CSS and also <code>doipopup.css</code> if you want the plugin
+	    to look like it does on this site.</li>
+	  <li>Images from the <code>img</code> directory. Put these wherever you like - their location
+	    can be specified as an option.</li>
+	</ol>
 
-	<h3>eLife</h3>
-	<p>
-	  <a href="http://dx.doi.org/10.7554/eLife.01977">10.7554/eLife.01977</a>
-	  <a class="btn btn-info" id="doi-elife">Metadata</a>
-	</p>
+	<p>Now you can create the popup, passing in a DOI:</p>
 
-	<h3>Elsevier</h3>
-	<div class="panel panel-default">
-	  <div class="panel-body">
-	    <a href="http://dx.doi.org/10.1016/j.jnucmat.2014.12.036">
-	      10.1016/j.jnucmat.2014.12.036
-	    </a>
-	    <a class="btn btn-info" id="doi-elsevier">Metadata</a>
-	  </div>
-	</div>
+	<pre>$('#my-doi-popup-button').doiPopup({doi: '10.5555/12345678'});</pre>
 
-	<h2>How does it work?</h2>
-	
+	<p>Alternatively, when no DOI is passed, the popup will attempt to look up a DOI from
+	  any available <code>dc.identifier</code> meta tag on the page:</p>
+
+	<pre>$('#my-doi-popup-button').doiPopup();</pre>
+	  
+	<h4>Specifying Custom Options</h4>
+
+	<p>The plugin's behaviour can be customised by passing additional options to the <code>doiPopup</code>
+	  method. For example, set a custom image path, and custom content type labels:</p>
+
+	<pre>$('#my-doi-popup-buttom').doiPopup({
+  imageLocation: '//cdn.mydomain.com/doipopup/img',
+  contentTypeLabels: {'application/vnd.me.custom-xml+xml': 'Custom XML'}
+	  });</pre>
+
+	<h4>Options List</h4>
+
+	<table class="table table-striped">
+	  <tr>
+	    <th>Option</th>
+	    <th>Type</th>
+	    <th>Description</th>
+	  </tr>
+	  <tr>
+	    <td>doi</td>
+	    <td>String</td>
+	    <td>If specified, the DOI that will be looked up when the popup is shown.
+	      If not specified, DOI will be taken from the first <code>meta</code> tag with name <code>dc.identifier</code></td>
+	  </tr>
+	  <tr>
+	    <td>imageLocation</td>
+	    <td>String</td>
+	    <td>Path to location of images used by the popup. Defaults to <code>img</code>.</td>
+	  </tr>
+	  <tr>
+	    <td>metadataContentType</td>
+	    <td>String</td>
+	    <td>Content type requested when performing DOI content negotiation. Defaults
+	      to <code>application/vnd.citationstyles.csl+json</code>.
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>metadataParser</td>
+	    <td>Function</td>
+	    <td>Function that will parse DOI content negotation response. Must return
+	      a map with keys <code>authors</code>, <code>title</code>, <code>licenses</code> and <code>resources</code>. Defaults to a function that parses CSL JSON.</td>
+	  </tr>
+	  <tr>
+	    <td>licenseLabels</td>
+	    <td>Map</td>
+	    <td>Map of license URLs to image filenames. Defaults to map of CC licenses</td>
+	  </tr>
+	  <tr>
+	    <td>contentTypeLabels</td>
+	    <td>Map</td>
+	    <td>Map of content types (MIME types) to friendly labels.</td>
+	  </tr>
+	</table>
+
+	<p>All options are optional!</p>
+
       </div>
     </div>
 
     <script>
       $(document).ready(function() {
-      $('#doi-link-explicit').doiPopup({doi: '10.1155/2013/564864'});
-      $('#doi-link-meta').doiPopup();
-      $('#doi-elife').doiPopup({doi: '10.7554/eLife.01977'});
-      $('#doi-elsevier').doiPopup({doi: '10.1016/j.jnucmat.2014.12.036'});
+        $('#doi-link-explicit').doiPopup({doi: '10.1155/2013/564864'});
       });
     </script>
     
