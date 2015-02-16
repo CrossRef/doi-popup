@@ -25,13 +25,13 @@
 
     var defaultLicenseLabels = {
 	'http://creativecommons.org/licenses/by/3.0' :
-	'<img src="../img/cc-by.svg">',
+	'cc-by.svg',
 	'http://creativecommons.org/licenses/by/3.0/':
-	'<img src="../img/cc-by.svg">',
+	'cc-by.svg',
 	'http://creativecommons.org/licenses/by/4.0':
-	'<img src="../img/cc-by.svg">',
+	'cc-by.svg',
 	'http://creativecommons.org/licenses/by/4.0/':
-	'<img src="../img/cc-by.svg">'
+	'cc-by.svg',
     };
 
     var defaultContentGenerator = function(doi, metadata, options) {
@@ -54,7 +54,7 @@
 		
 		var $a = $('<a>')
 		    .attr('href', a['ORCID'])
-		    .append($('<img>').attr('src', '../img/orcid_24x24.gif'))
+		    .append($('<img>').attr('src', options.imageLocation + '/orcid_24x24.gif'))
 		    .append($('<span>').text(' ' + label));
 		$authorList.append($('<li>').append($a));
 	    }
@@ -74,10 +74,20 @@
 	$.each(metadata['licenses'], function(i) {
 	    var l = metadata['licenses'][i];
 	    if (l['URL']) {
+		var $label;
+
+		if (options.licenseLabels[l['URL']]) {
+		    $label = $('<img>').attr('src',
+					     options.imageLocation
+					     + '/'
+					     + options.licenseLabels[l['URL']]);
+		} else {
+		    $label = $('<span>').text(l['URL']);
+		}   
+		
 		var $a = $('<a>')
 		    .attr('href', l['URL'])
-		    .html(options.licenseLabels[l['URL']]
-			  || l['URL']);
+		    .append($label);
 		$licenseList.append($('<li>').append($a));
 	    }
 	});
@@ -101,7 +111,7 @@
 	$c.append($('<a>')
 		  .attr('href', 'http://dx.doi.org/' + doi)
 		  .append($('<img>')
-			  .attr('src', '../img/crossref.png')
+			  .attr('src', options.imageLocation + '/crossref.png')
 			  .attr('style', 'height:10px; margin-right: 8px;'))
 		  .append($('<span>').text(doi)));
 	$c.append($('<hr>'));
@@ -151,6 +161,7 @@
 	html: true,
 	content: 'spinner',
 	placement: 'bottom',
+	imageLocation: 'img',
 	trigger: 'click',
 	metadataContentType: 'application/vnd.citationstyles.csl+json',
 	metadataParser: citeprocJsonMetadataParser,
