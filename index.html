@@ -2,8 +2,8 @@
   <head>
     <meta name="dc.identifier" content="10.1155/2013/938169">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="dist/tooltip.js"></script>
-    <script src="dist/doipopup.js"></script>
+    <script src="tooltip.js"></script>
+    <script src="doipopup.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
@@ -29,8 +29,6 @@
     </div>
     
     <div class="container">
-
-
       <div class="row" style="margin-top: 5em;">
 	<center>
 	  <p class="lead" style="margin-top: 2em; margin-bottom: 3.5em;">
@@ -47,7 +45,26 @@
 
       <div class="row">
 	<h2>Using the plugin</h2>
-	
+
+	<h2>Try it with your own DOIs</h2>
+
+	<input id="doi-try-doi" type="text" placeholder="10.5555/12345678"></input>
+	<a id="doi-try" type"submit" class="btn btn-primary">Create Popup</a>
+
+	<div class="well"><center id="doi-try-gen"></center></div>
+
+	<script type="text/javascript">
+	  $(document).ready(function() {
+	    $('#doi-try').on('click', function() {
+	      var val = $('#doi-try-doi').val();
+	      if (val) {
+	          $('#doi-try-gen').html('<span>' + val + ' </span><a class="btn btn-primary" id="doi-try-popup">DOI</a>');
+	          $('#doi-try-popup').doiPopup({doi: $('#doi-try-doi').val()});
+	      }
+	    });
+	  });
+	</script>
+
 	<h2>Examples</h2>
 
 	<h2>Explicit DOI</h2>

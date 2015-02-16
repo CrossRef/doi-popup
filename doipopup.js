@@ -39,58 +39,64 @@
 	var $resourceList = $('<ul class="list-inline">');
 	var $licenseList = $('<ul class="list-inline">');
 
-	$.each(metadata['authors'], function(i) {
-	    var a = metadata['authors'][i];
-	    if (a['ORCID']) {
-		var label;
+	if (metadata['authors']) {
+	    $.each(metadata['authors'], function(i) {
+		var a = metadata['authors'][i];
+		if (a['ORCID']) {
+		    var label;
 
-		if (a['given'] && a['family']) {
-		    label = a['given'] + ' ' + a['family'];
-		} else if (a['family']) {
-		    label = a['family'];
-		} else {
-		    label = a['ORCID'];
+		    if (a['given'] && a['family']) {
+			label = a['given'] + ' ' + a['family'];
+		    } else if (a['family']) {
+			label = a['family'];
+		    } else {
+			label = a['ORCID'];
+		    }
+		    
+		    var $a = $('<a>')
+			.attr('href', a['ORCID'])
+			.append($('<img>').attr('src', options.imageLocation + '/orcid_24x24.gif'))
+			.append($('<span>').text(' ' + label));
+		    $authorList.append($('<li>').append($a));
 		}
-		
-		var $a = $('<a>')
-		    .attr('href', a['ORCID'])
-		    .append($('<img>').attr('src', options.imageLocation + '/orcid_24x24.gif'))
-		    .append($('<span>').text(' ' + label));
-		$authorList.append($('<li>').append($a));
-	    }
-	});
+	    });
+	}
 
-	$.each(metadata['resources'], function(i) {
-	    var r = metadata['resources'][i];
-	    if (r['URL']) {
-		var $a = $('<a>')
-		    .attr('href', r['URL'])
-		    .text(options.contentTypeLabels[r['content-type']]
-			  || r['content-type']);
-		$resourceList.append($('<li>').append($a));
-	    }
-	});
+	if (metadata['resources']) {
+	    $.each(metadata['resources'], function(i) {
+		var r = metadata['resources'][i];
+		if (r['URL']) {
+		    var $a = $('<a>')
+			.attr('href', r['URL'])
+			.text(options.contentTypeLabels[r['content-type']]
+			      || r['content-type']);
+		    $resourceList.append($('<li>').append($a));
+		}
+	    });
+	}
 
-	$.each(metadata['licenses'], function(i) {
-	    var l = metadata['licenses'][i];
-	    if (l['URL']) {
-		var $label;
+	if (metadata['licenses']) {
+	    $.each(metadata['licenses'], function(i) {
+		var l = metadata['licenses'][i];
+		if (l['URL']) {
+		    var $label;
 
-		if (options.licenseLabels[l['URL']]) {
-		    $label = $('<img>').attr('src',
-					     options.imageLocation
-					     + '/'
-					     + options.licenseLabels[l['URL']]);
-		} else {
-		    $label = $('<span>').text(l['URL']);
-		}   
-		
-		var $a = $('<a>')
-		    .attr('href', l['URL'])
-		    .append($label);
-		$licenseList.append($('<li>').append($a));
-	    }
-	});
+		    if (options.licenseLabels[l['URL']]) {
+			$label = $('<img>').attr('src',
+						 options.imageLocation
+						 + '/'
+						 + options.licenseLabels[l['URL']]);
+		    } else {
+			$label = $('<span>').text(l['URL']);
+		    }   
+		    
+		    var $a = $('<a>')
+			.attr('href', l['URL'])
+			.append($label);
+		    $licenseList.append($('<li>').append($a));
+		}
+	    });
+	}
 
 	var $authors = $('<div>')
 	    .append($('<span>').text('Authors'))
@@ -116,13 +122,13 @@
 		  .append($('<span>').text(doi)));
 	$c.append($('<hr>'));
 
-	if (metadata['licenses'].length != 0) {
+	if (metadata['licenses'] && metadata['licenses'].length != 0) {
 	    $c.append($('<div class="row" style="margin-bottom: 10px">')
 		      .append($('<div class="col-md-2">').append($('<b>').text('Licenses')))
 		      .append($('<div class="col-md-10">').append($licenseList)));
 	}
 
-	if (metadata['authors'].length != 0) {
+	if (metadata['authors'] && metadata['authors'].length != 0) {
 	    $c.append($('<div class="row">')
 		      .append($('<div class="col-md-2">').append($('<b>').text('Authors')))
 		      .append($('<div class="col-md-10">').append($authorList)));
