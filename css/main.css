@@ -59,11 +59,8 @@ a, a:hover, a:visited {
 }
 
 .navbar {
-    border-radius: 0;
     margin-bottom: 10px;
     border: 0;
-    border-bottom: 2px solid #eee;
-    border-color: #bbb;
 }
 
 .jumbotron-top h2 {

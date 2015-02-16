@@ -156,7 +156,7 @@
 	metadataParser: citeprocJsonMetadataParser,
 	licenseLabels: defaultLicenseLabels,
 	contentTypeLabels: defaultContentTypeLabels,
-	template: '<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+	template: '<div style="max-width: 600px;" class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
     });
 
     DoiPopup.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype);

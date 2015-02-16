@@ -2,26 +2,36 @@
   <head>
     <meta name="dc.identifier" content="10.1155/2013/938169">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="../tooltip.js"></script>
-    <script src="../doipopup.js"></script>
-    <link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
-
-    <style type="text/css">
-      .popover {
-        max-width:600px;
-      }
-    </style>
+    <script src="dist/tooltip.js"></script>
+    <script src="dist/doipopup.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
   </head>
   <body>
-    <div class="container">
-      <div class="row">
-	<div class="page-header">
-	  <h1>DOI Popup <small>A jQuery and Bootstrap Plugin</small></h1>
+    <div class="navbar navbar-inverse">
+      <div class="container">
+	<div class="navbar-header">
+	  <a class="navbar-brand" href="#">
+	    <span>
+	      <img src="logo.png" style="width: 120px">
+	       <span style="font-size: 0.8em;"> DOI Popup</span>
+	    </span>
+	  </a>
 	</div>
+	<ul class="nav navbar-nav navbar-right">
+	  <li>
+	    <a href="http://github.com/CrossRef/doi-popup">
+	      Source on Github
+	    </a>
+	  </li>
+	</ul>
       </div>
+    </div>
+    
+    <div class="container">
 
-      <div class="row">
+
+      <div class="row" style="margin-top: 5em;">
 	<center>
 	  <p class="lead" style="margin-top: 2em; margin-bottom: 3.5em;">
 	    Display licenses, full-text links and ORCIDs for some* DOIs.
