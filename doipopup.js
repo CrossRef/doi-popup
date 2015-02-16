@@ -143,8 +143,10 @@
 	var doi = this.getDoi();
 	var o = this.options;
 
+	// For now we must use data.crossref.org due to
+	// dx.doi.org lacking CORS headers.
 	$.ajax({
-	    url: 'http://dx.doi.org/' + doi,
+	    url: 'http://data.crossref.org/' + doi,
 	    headers: {'Accept': o.metadataContentType}
 	}).success(function(data, status, xhr) {
 	    // Needs Access-Control-Expose-Headers: Link
