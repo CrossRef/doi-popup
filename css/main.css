@@ -6,6 +6,21 @@
     color: #4f5858;
 }
 
+.btn-primary {
+    color: #4f5858;
+    background-color: #d8d2c4;
+    border-color:  #d8d2c4;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+/* All in one selector */
+.doi-image {
+  height:20px;
+  margin-right: 4px;
+  vertical-align: text-bottom;
+
+}
+
 a, a:hover, a:visited {
     color: #ef3340;
 }
