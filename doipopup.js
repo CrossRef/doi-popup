@@ -117,7 +117,7 @@
 	$c.append($('<a>')
 		  .attr('href', 'http://doi.org/' + doi)
 		  .append($('<img>')
-			  .attr('src', 'https://assets.crossref.org/logo/crossref-logo-landscape-100.png')
+			  .attr('src', 'img/crossref-logo-icon-only.svg')
 			  .attr('style', 'height:20px; margin-right: 8px;'))
 		  .append($('<span>').text(doi)));
 	$c.append($('<hr>'));
