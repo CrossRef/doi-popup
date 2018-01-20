@@ -57,8 +57,8 @@
 	    Display licenses, full-text links and ORCIDs for some* DOIs.
 	  </p>
 	  <p style="margin-bottom: 6em;">
-	    <span>https://doi.org/10.1155/2013/564864</span>
-	    <a class="btn btn-primary btn-sm" id="doi-link-explicit">DOI</a>
+	    <a class="btn btn-primary btn-sm" id="doi-link-explicit">
+        <img src="img/crossref-logo-icon-only.svg" class="doi-image">Crossref doi: 10.1155/2013/564864</a>
 	  </p>
 	</center>
 	<small>* Where the DOI's publisher has deposited information with a DOI registration agency.</small>
@@ -82,7 +82,7 @@
 	    $('#doi-try').on('click', function() {
 	      var val = $('#doi-try-doi').val();
 	      if (val) {
-	          $('#doi-try-gen').html('<span>' + val + ' </span><a class="btn btn-primary" id="doi-try-popup">DOI</a>');
+	          $('#doi-try-gen').html('<a class="btn btn-primary" id="doi-try-popup"><img src="img/crossref-logo-icon-only.svg" class="doi-image">Crossref doi: ' + val + '</a>');
 	          $('#doi-try-popup').doiPopup({doi: $('#doi-try-doi').val()});
 	      }
 	    });
