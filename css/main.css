@@ -1,9 +1,9 @@
 .cr-red {
-    color: #c0473f;
+    color: #ef3340;
 }
 
 .cr-grey {
-    color: #514746;
+    color: #4f5858;
 }
 
 a, a:hover, a:visited {
@@ -34,7 +34,7 @@ a, a:hover, a:visited {
     background-color: #c0473f;
     border-color:  #c0473f;
 }
-								   
+
 .navbar {
   #font-size: 1.9em;
 }
