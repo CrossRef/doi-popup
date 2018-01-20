@@ -52,7 +52,7 @@
 		    } else {
 			label = a['ORCID'];
 		    }
-		    
+
 		    var $a = $('<a>')
 			.attr('href', a['ORCID'])
 			.append($('<img>').attr('src', options.imageLocation + '/orcid_24x24.gif'))
@@ -88,8 +88,8 @@
 						 + options.licenseLabels[l['URL']]);
 		    } else {
 			$label = $('<span>').text(l['URL']);
-		    }   
-		    
+		    }
+
 		    var $a = $('<a>')
 			.attr('href', l['URL'])
 			.append($label);
@@ -115,7 +115,7 @@
 	$c.append($('<p style="font-size:1.2em;">').text(metadata['title']));
 	$c.append($resourceList.addClass('pull-right'));
 	$c.append($('<a>')
-		  .attr('href', 'http://dx.doi.org/' + doi)
+		  .attr('href', 'http://doi.org/' + doi)
 		  .append($('<img>')
 			  .attr('src', 'https://assets.crossref.org/logo/crossref-logo-landscape-100.png')
 			  .attr('style', 'height:20px; margin-right: 8px;'))
@@ -144,7 +144,7 @@
 	var o = this.options;
 
 	$.ajax({
-	    url: 'http://dx.doi.org/' + doi,
+	    url: 'http://doi.org/' + doi,
 	    headers: {
 		// Safari does not repeat this post redirect.
 		'Accept': o.metadataContentType}
@@ -179,7 +179,7 @@
     });
 
     DoiPopup.prototype = $.extend({}, $.fn.tooltip.Constructor.prototype);
-    
+
     DoiPopup.prototype.constructor = DoiPopup;
 
     DoiPopup.prototype.getDefaults = function () {
@@ -238,7 +238,7 @@
 	if (!this.$tip) {
 	    this.$tip = $(this.options.template);
 	}
-	
+
 	return this.$tip;
     };
 
@@ -247,15 +247,15 @@
 	    var $this   = $(this);
 	    var data    = $this.data('bs.doiPopup');
 	    var options = typeof option == 'object' && option;
-	    
+
 	    if (!data && option == 'destroy') {
 		return;
 	    }
-	    
+
 	    if (!data) {
 		$this.data('bs.doiPopup', (data = new DoiPopup(this, options)));
 	    }
-	    
+
 	    if (typeof option == 'string') {
 		data[option]();
 	    }
@@ -266,10 +266,10 @@
 
     $.fn.doiPopup             = Plugin;
     $.fn.doiPopup.Constructor = DoiPopup;
-    
+
     $.fn.doiPopup.noConflict = function () {
 	$.fn.doiPopup = old;
 	return this;
     };
-    
+
 }(jQuery);
