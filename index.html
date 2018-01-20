@@ -1,7 +1,7 @@
 <html>
   <head>
     <meta name="dc.identifier" content="10.1155/2013/938169">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="tooltip.js"></script>
     <script src="doipopup.js"></script>
     <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -41,24 +41,24 @@
 	</div>
 	<ul class="nav navbar-nav navbar-right">
 	  <li>
-	    <a href="http://github.com/CrossRef/doi-popup">
+	    <a href="https://github.com/CrossRef/doi-popup">
 	      Source on Github
 	    </a>
 	  </li>
 	</ul>
       </div>
     </div>
-    
+
     <div class="container">
       <div class="row" style="margin-top: 5em;">
 	<center>
-	  <h3>DOI Popup</h3>
+	  <h3>DOI Popup Proof of Concept</h3>
 	  <p class="lead" style="margin-top: 2em; margin-bottom: 3.5em;">
-	    Display licenses, full-text links and ORCIDs for some* DOIs.
+	    Display licenses, full-text links and ORCIDs for Crossref DOIs.*
 	  </p>
 	  <p style="margin-bottom: 6em;">
-	    <span>http://dx.doi.org/10.1155/2013/564864</span>
-	    <a class="btn btn-primary btn-sm" id="doi-link-explicit">DOI</a>
+	    <a class="btn btn-primary btn-sm" id="doi-link-explicit">
+        <img src="img/crossref-logo-icon-only.svg" class="doi-image">Crossref doi: 10.1155/2013/564864</a>
 	  </p>
 	</center>
 	<small>* Where the DOI's publisher has deposited information with a DOI registration agency.</small>
@@ -82,7 +82,7 @@
 	    $('#doi-try').on('click', function() {
 	      var val = $('#doi-try-doi').val();
 	      if (val) {
-	          $('#doi-try-gen').html('<span>' + val + ' </span><a class="btn btn-primary" id="doi-try-popup">DOI</a>');
+	          $('#doi-try-gen').html('<a class="btn btn-primary" id="doi-try-popup"><img src="img/crossref-logo-icon-only.svg" class="doi-image">Crossref doi: ' + val + '</a>');
 	          $('#doi-try-popup').doiPopup({doi: $('#doi-try-doi').val()});
 	      }
 	    });
@@ -117,7 +117,7 @@
 	  any available <code>dc.identifier</code> meta tag on the page:</p>
 
 	<pre>$('#my-doi-popup-button').doiPopup();</pre>
-	  
+
 	<h4>Specifying Custom Options</h4>
 
 	<p>The plugin's behaviour can be customised by passing additional options to the <code>doiPopup</code>
@@ -182,6 +182,6 @@
         $('#doi-link-explicit').doiPopup({doi: '10.1155/2013/564864'});
       });
     </script>
-    
+
   </body>
 </html>
