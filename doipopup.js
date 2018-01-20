@@ -115,7 +115,7 @@
 	$c.append($('<p style="font-size:1.2em;">').text(metadata['title']));
 	$c.append($resourceList.addClass('pull-right'));
 	$c.append($('<a>')
-		  .attr('href', 'http://doi.org/' + doi)
+		  .attr('href', 'https://doi.org/' + doi)
 		  .append($('<img>')
 			  .attr('src', 'img/crossref-logo-icon-only.svg')
 			  .attr('style', 'height:20px; margin-right: 8px;'))
@@ -144,7 +144,7 @@
 	var o = this.options;
 
 	$.ajax({
-	    url: 'http://doi.org/' + doi,
+	    url: 'https://doi.org/' + doi,
 	    headers: {
 		// Safari does not repeat this post redirect.
 		'Accept': o.metadataContentType}
