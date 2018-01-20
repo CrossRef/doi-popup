@@ -7,7 +7,7 @@
 }
 
 a, a:hover, a:visited {
-    color: #c0473f;
+    color: #ef3340;
 }
 
 .center-block {
@@ -17,22 +17,22 @@ a, a:hover, a:visited {
 }
 
 .dropdown-menu li a:hover {
-    background-color: #c0473f;
+    background-color: #ef3340;
 }
 
 .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
-    background-color: #c0473f;
-    border-color:  #c0473f;
+    background-color: #ef3340;
+    border-color:  #ef3340;
 }
 
 .pagination > .active > a {
-    background-color: #c0473f;
-    border-color:  #c0473f;
+    background-color: #ef3340;
+    border-color:  #ef3340;
 }
 
 .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
-    background-color: #c0473f;
-    border-color:  #c0473f;
+    background-color: #ef3340;
+    border-color:  #ef3340;
 }
 
 .navbar {
@@ -124,9 +124,9 @@ a, a:hover, a:visited {
 }
 
 .boxy:hover > div {
-    webkit-box-shadow: 0px 0px 10px 0px #c0473f;
-    -moz-box-shadow: 0px 0px 10px 0px #c0473f;
-    box-shadow: 0px 0px 10px 0px #c0473f;
+    webkit-box-shadow: 0px 0px 10px 0px #ef3340;
+    -moz-box-shadow: 0px 0px 10px 0px #ef3340;
+    box-shadow: 0px 0px 10px 0px #ef3340;
 }
 
 .link-icon {
